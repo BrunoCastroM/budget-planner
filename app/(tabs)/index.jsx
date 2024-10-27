@@ -11,9 +11,9 @@
 
 import { View, Text, Button } from 'react-native';
 import React, { useEffect } from 'react';
-import services from '../utils/services';
 import { useRouter } from 'expo-router';
-import { client } from '../utils/KindeConfig';
+import services from '../../utils/services';
+import { client } from '../../utils/KindeConfig';
 
 export default function Home() {
     const router = useRouter();
@@ -32,16 +32,16 @@ export default function Home() {
     const handleLogout = async () => {
         const loggedOut = await client.logout();
         if (loggedOut) {
-            await services.storeData('login', 'false')
-          router.replace('/login')
+            await services.storeData('login', 'false');
+            router.replace('/login');
         }
-      };
+    };
 
     return (
-        <View>
+        <View style={{ marginTop: 20 }}>
             <Text>Home</Text>
 
-            <Button title="Sair" onPress={handleLogout}/>
+            <Button title="Sair" onPress={handleLogout} />
         </View>
     );
 }
