@@ -14,16 +14,19 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import services from '../../utils/services';
 import { client } from '../../utils/KindeConfig';
+import { supabase } from '../../utils/SupabaseConfig';
 
 export default function Home() {
     const router = useRouter();
     useEffect(() => {
         checkUserAuth();
+        getCategoryList();
     }, []);
 
     // Used to check if user is already auth or not
     const checkUserAuth = async () => {
         const result = await services.getData('login');
+
         if (result !== 'true') {
             router.replace('/login');
         }
@@ -31,10 +34,22 @@ export default function Home() {
 
     const handleLogout = async () => {
         const loggedOut = await client.logout();
+
         if (loggedOut) {
             await services.storeData('login', 'false');
             router.replace('/login');
         }
+    };
+
+    const getCategoryList = async () => {
+        const user = await client.getUserDetails();
+
+        const { data, error } = await supabase
+            .from('Category')
+            .select('*')
+            .eq('created_by', user.email);
+
+        console.log('Data:', data);
     };
 
     return (
