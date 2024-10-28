@@ -11,8 +11,8 @@ export default function CircularChart() {
 
     return (
         <View style={styles.container}>
-            <Text style={{ fontSize: 20 }}>
-                Total Estimado: <Text style={{ fontWeight: 'bold' }}>R$ 0</Text>
+            <Text style={{ fontSize: 20, fontFamily: 'outfit' }}>
+                Total Estimado: <Text style={{ fontFamily: 'outfit-bold' }}>R$ 0</Text>
             </Text>
 
             <View style={styles.subContainer}>

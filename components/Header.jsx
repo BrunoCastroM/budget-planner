@@ -45,12 +45,12 @@ export default function Header() {
                 }}
             >
                 <View>
-                    <Text style={{ color: Colors.WHITE, fontSize: 16 }}>Bem vindo!</Text>
+                    <Text style={{ color: Colors.WHITE, fontSize: 16, fontFamily: 'outfit'}}>Bem vindo!</Text>
                     <Text
                         style={{
                             color: Colors.WHITE,
                             fontSize: 20,
-                            fontWeight: 'bold',
+                            fontFamily: 'outfit-bold',
                         }}
                     >
                         {user?.given_name}
