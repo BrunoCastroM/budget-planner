@@ -15,8 +15,9 @@ import { useRouter } from 'expo-router';
 import services from '../../utils/services';
 import { client } from '../../utils/KindeConfig';
 import { supabase } from '../../utils/SupabaseConfig';
-import Header from '../../components/Header';
 import Colors from '../../utils/Colors';
+import Header from '../../components/Header';
+import CircularChart from '../../components/CircularChart';
 
 export default function Home() {
     const router = useRouter();
@@ -64,6 +65,8 @@ export default function Home() {
             }}
         >
             <Header />
+
+            <CircularChart />
 
 
             {/* <Button title="Sair" onPress={handleLogout} /> */}
