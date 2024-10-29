@@ -12,6 +12,10 @@ export default function Layout() {
         <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="login/index" options={{ headerShown: false }} />
+            <Stack.Screen
+                name="add-new-category"
+                options={{ presentation: 'modal', headerTitle: 'Adicionar Nova Categoria' }}
+            />
         </Stack>
     );
 }

@@ -11,13 +11,14 @@
 
 import { View, Text, Button, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import services from '../../utils/services';
 import { client } from '../../utils/KindeConfig';
 import { supabase } from '../../utils/SupabaseConfig';
 import Colors from '../../utils/Colors';
 import Header from '../../components/Header';
 import CircularChart from '../../components/CircularChart';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function Home() {
     const router = useRouter();
@@ -59,17 +60,25 @@ export default function Home() {
         <View
             style={{
                 marginTop: 30,
-                padding: 20,
-                backgroundColor: Colors.PRIMARY,
-                height: 150,
+                flex: 1,
             }}
         >
-            <Header />
+            <View
+                style={{
+                    padding: 20,
+                    backgroundColor: Colors.PRIMARY,
+                    height: 150,
+                }}
+            >
+                <Header />
 
-            <CircularChart />
+                <CircularChart />
 
-
-            {/* <Button title="Sair" onPress={handleLogout} /> */}
+                {/* <Button title="Sair" onPress={handleLogout} /> */}
+            </View>
+            <Link href={'/add-new-category'} style={styles.addBtnContainer}>
+                <Ionicons name="add-circle" size={64} color={Colors.PRIMARY} />
+            </Link>
         </View>
     );
 }
@@ -78,4 +87,10 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
     },
+    addBtnContainer: {
+        position: 'absolute',
+        bottom: 60,
+        right: 16,
+        
+    }
 });
