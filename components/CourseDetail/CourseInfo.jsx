@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     textIcon: {
-        fontSize: 25,
+        fontSize: 35,
         padding: 20,
         borderRadius: 15,
     },

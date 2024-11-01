@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { supabase } from '../utils/SupabaseConfig';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CourseInfo from '../components/CourseDetail/CourseInfo';
+import CourseItemList from '../components/CourseDetail/CourseItemList';
 
 export default function CategoryDetail() {
     const { categoryId } = useLocalSearchParams();
@@ -37,6 +38,8 @@ export default function CategoryDetail() {
             </TouchableOpacity>
             
             <CourseInfo categoryData={categoryData} />
+
+            <CourseItemList categoryData={categoryData}/>
         </View>
     );
 }
