@@ -9,8 +9,8 @@
 //     );
 // }
 
-import { View, Text, Button, StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
+import { View, Text, Button, StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Link, useRouter } from 'expo-router';
 import services from '../../utils/services';
 import { client } from '../../utils/KindeConfig';
@@ -19,9 +19,13 @@ import Colors from '../../utils/Colors';
 import Header from '../../components/Header';
 import CircularChart from '../../components/CircularChart';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import CategoryList from '../../components/CategoryList';
 
 export default function Home() {
     const router = useRouter();
+    const [categoryList, setCategoryList] = useState();
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         checkUserAuth();
         getCategoryList();
@@ -36,24 +40,28 @@ export default function Home() {
         }
     };
 
-    const handleLogout = async () => {
-        const loggedOut = await client.logout();
+    // const handleLogout = async () => {
+    //     const loggedOut = await client.logout();
 
-        if (loggedOut) {
-            await services.storeData('login', 'false');
-            router.replace('/login');
-        }
-    };
+    //     if (loggedOut) {
+    //         await services.storeData('login', 'false');
+    //         router.replace('/login');
+    //     }
+    // };
 
     const getCategoryList = async () => {
-        const user = await client.getUserDetails();
+        setLoading(true);
 
+        const user = await client.getUserDetails();
         const { data, error } = await supabase
             .from('Category')
-            .select('*')
+            .select('*,CategoryItems(*)')
             .eq('created_by', user.email);
 
-        // console.log('Data:', data);
+        console.log('Data:', data);
+
+        setCategoryList(data);
+        data && setLoading(false);
     };
 
     return (
@@ -63,19 +71,33 @@ export default function Home() {
                 flex: 1,
             }}
         >
-            <View
-                style={{
-                    padding: 20,
-                    backgroundColor: Colors.PRIMARY,
-                    height: 150,
-                }}
+            <ScrollView
+                refreshControl={
+                    <RefreshControl onRefresh={() => getCategoryList()} refreshing={loading} />
+                }
             >
-                <Header />
+                <View
+                    style={{
+                        padding: 20,
+                        backgroundColor: Colors.PRIMARY,
+                        height: 150,
+                    }}
+                >
+                    <Header />
+                </View>
+                <View
+                    style={{
+                        padding: 20,
+                        marginTop: -75,
+                    }}
+                >
+                    <CircularChart />
 
-                <CircularChart />
+                    <CategoryList categoryList={categoryList} />
+                </View>
 
                 {/* <Button title="Sair" onPress={handleLogout} /> */}
-            </View>
+            </ScrollView>
             <Link href={'/add-new-category'} style={styles.addBtnContainer}>
                 <Ionicons name="add-circle" size={64} color={Colors.PRIMARY} />
             </Link>
@@ -91,6 +113,5 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 60,
         right: 16,
-        
-    }
+    },
 });

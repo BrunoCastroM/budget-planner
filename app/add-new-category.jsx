@@ -6,8 +6,11 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { supabase } from '../utils/SupabaseConfig';
 import { client } from '../utils/KindeConfig';
+import { useRouter } from 'expo-router';
 
 export default function AddNewCategory() {
+    const router = useRouter();
+
     const [selectedIcon, setSelectedIcon] = useState('IC');
     const [selectedColor, setSelectedColor] = useState(Colors.PURPLE);
     const [categoryName, setCategoryName] = useState();
@@ -30,6 +33,12 @@ export default function AddNewCategory() {
             .select();
 
         if (data) {
+            router.replace({
+                pathname: '/category-detail',
+                params: {
+                    categoryId: data[0].id,
+                },
+            });
             ToastAndroid.show('Categoria Criada', ToastAndroid.SHORT);
         }
     };
