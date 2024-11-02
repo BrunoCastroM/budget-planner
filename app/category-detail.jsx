@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Link, useLocalSearchParams, useRouter } from 'expo-router';
 import { supabase } from '../utils/SupabaseConfig';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import CourseInfo from '../components/CourseDetail/CourseInfo';
 import CourseItemList from '../components/CourseDetail/CourseItemList';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Colors from '../utils/Colors';
 
 export default function CategoryDetail() {
     const { categoryId } = useLocalSearchParams();
@@ -12,7 +13,7 @@ export default function CategoryDetail() {
     const router = useRouter();
 
     useEffect(() => {
-        console.log(categoryId);
+        // console.log(categoryId);
 
         categoryId && getCategoryDetail();
     }, [categoryId]);
@@ -31,15 +32,35 @@ export default function CategoryDetail() {
             style={{
                 padding: 20,
                 marginTop: 20,
+                flex: 1,
+                backgroundColor: Colors.WHITE
             }}
         >
             <TouchableOpacity onPress={() => router.back()}>
                 <Ionicons name="arrow-back-circle" size={44} color="black" />
             </TouchableOpacity>
-            
+
             <CourseInfo categoryData={categoryData} />
 
-            <CourseItemList categoryData={categoryData}/>
+            <CourseItemList categoryData={categoryData} />
+
+            <Link
+                href={{
+                    pathname: '/add-new-category-item',
+                    params: { categoryId: categoryData.id },
+                }}
+                style={styles.floatingBtn}
+            >
+                <Ionicons name="add-circle" size={60} color={Colors.PRIMARY} />
+            </Link>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    floatingBtn: {
+        position: 'absolute',
+        bottom: 16,
+        right: 16,
+    },
+});

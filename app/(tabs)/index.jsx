@@ -58,7 +58,7 @@ export default function Home() {
             .select('*,CategoryItems(*)')
             .eq('created_by', user.email);
 
-        console.log('Data:', data);
+        // console.log('Data:', data);
 
         setCategoryList(data);
         data && setLoading(false);
@@ -97,6 +97,7 @@ export default function Home() {
                 </View>
 
                 {/* <Button title="Sair" onPress={handleLogout} /> */}
+                
             </ScrollView>
             <Link href={'/add-new-category'} style={styles.addBtnContainer}>
                 <Ionicons name="add-circle" size={64} color={Colors.PRIMARY} />
