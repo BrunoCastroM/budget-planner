@@ -10,7 +10,7 @@ export default function Header() {
     useEffect(() => {
         getUserData();
     }, []);
-    
+
     // Used to get User Data
     const getUserData = async () => {
         const user = await client.getUserDetails();
@@ -45,7 +45,9 @@ export default function Header() {
                 }}
             >
                 <View>
-                    <Text style={{ color: Colors.WHITE, fontSize: 16, fontFamily: 'outfit'}}>Bem vindo!</Text>
+                    <Text style={{ color: Colors.WHITE, fontSize: 16, fontFamily: 'outfit' }}>
+                        Bem vindo!
+                    </Text>
                     <Text
                         style={{
                             color: Colors.WHITE,

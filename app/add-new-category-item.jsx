@@ -141,7 +141,7 @@ export default function AddNewCategoryItem() {
                     onPress={() => onClickAdd()}
                 >
                     {loading ? (
-                        <ActivityIndicator color={Colors.WHITE}/>
+                        <ActivityIndicator color={Colors.WHITE} />
                     ) : (
                         <Text style={styles.textButton}>Adicionar</Text>
                     )}

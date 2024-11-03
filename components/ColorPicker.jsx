@@ -53,9 +53,9 @@ export default function ColorPicker({ selectedColor, setSelectedColor }) {
                             backgroundColor: color,
                             borderRadius: 99,
                         },
-                        selectedColor === color && { borderWidth: 4, borderColor: 'black' }]}
-                        onPress={()=> setSelectedColor(color)}
-
+                        selectedColor === color && { borderWidth: 4, borderColor: 'black' },
+                    ]}
+                    onPress={() => setSelectedColor(color)}
                 />
             ))}
         </View>

@@ -17,7 +17,7 @@ export default function CategoryList({ categoryList }) {
 
     const calculateTotalCost = (categoryItems) => {
         let totalCost = 0;
-        
+
         categoryItems.forEach((item) => {
             totalCost += item.cost;
         });

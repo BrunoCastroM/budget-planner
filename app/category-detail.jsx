@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocalSearchParams, useRouter } from 'expo-router';
 import { supabase } from '../utils/SupabaseConfig';
@@ -33,16 +33,21 @@ export default function CategoryDetail() {
                 padding: 20,
                 marginTop: 20,
                 flex: 1,
-                backgroundColor: Colors.WHITE
+                backgroundColor: Colors.WHITE,
             }}
         >
-            <TouchableOpacity onPress={() => router.back()}>
-                <Ionicons name="arrow-back-circle" size={44} color="black" />
-            </TouchableOpacity>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <TouchableOpacity onPress={() => router.replace('/(tabs)')}>
+                    <Ionicons name="arrow-back-circle" size={44} color="black" />
+                </TouchableOpacity>
 
-            <CourseInfo categoryData={categoryData} />
+                <CourseInfo categoryData={categoryData} />
 
-            <CourseItemList categoryData={categoryData} />
+                <CourseItemList
+                    categoryData={categoryData}
+                    setUpdateRecord={() => getCategoryDetail()}
+                />
+            </ScrollView>
 
             <Link
                 href={{
