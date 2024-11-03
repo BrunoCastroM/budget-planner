@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     },
     addBtnContainer: {
         position: 'absolute',
-        bottom: 60,
+        bottom: 20,
         right: 16,
     },
 });
