@@ -91,13 +91,12 @@ export default function Home() {
                         marginTop: -75,
                     }}
                 >
-                    <CircularChart />
+                    <CircularChart categoryList={categoryList} />
 
                     <CategoryList categoryList={categoryList} />
                 </View>
 
                 {/* <Button title="Sair" onPress={handleLogout} /> */}
-                
             </ScrollView>
             <Link href={'/add-new-category'} style={styles.addBtnContainer}>
                 <Ionicons name="add-circle" size={64} color={Colors.PRIMARY} />
