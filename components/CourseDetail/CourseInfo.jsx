@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ToastAndroid } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { supabase } from '../../utils/SupabaseConfig';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../../utils/Colors';
+import { useRouter } from 'expo-router';
 
 export default function CourseInfo({ categoryData }) {
+    const router = useRouter();
     const [totalCost, setTotalCost] = useState();
     const [totalPerc, setTotalPerc] = useState(0);
 
@@ -19,9 +22,40 @@ export default function CourseInfo({ categoryData }) {
 
         setTotalCost(total);
 
-        const perc = (total / categoryData.assigned_budget) * 100;
+        let perc = (total / categoryData.assigned_budget) * 100;
+
+        if (perc > 100) {
+            perc = 100;
+        }
+
         setTotalPerc(perc);
     };
+
+    const onDeleteCotegory = () => {
+        Alert.alert('Você tem certeza?', 'Você realmente quer deletar a categoria?', [
+            {
+                text: 'Cancelar',
+                style: 'cancel',
+            },
+            {
+                text: 'Sim',
+                style: 'destructive',
+                onPress: async () => {
+                    const { error } = await supabase
+                        .from('CategoryItems')
+                        .delete()
+                        .eq('category_id', categoryData.id);
+
+                    await supabase.from('Category').delete().eq('id', categoryData.id);
+
+                    ToastAndroid.show('Categoria deletada!', ToastAndroid.SHORT);
+
+                    router.replace('/(tabs)');
+                },
+            },
+        ]);
+    };
+
     return (
         <View>
             <View style={styles.container}>
@@ -38,14 +72,16 @@ export default function CourseInfo({ categoryData }) {
                     </Text>
                 </View>
 
-                <Ionicons name="trash" size={24} color="red" />
+                <TouchableOpacity onPress={() => onDeleteCotegory()}>
+                    <Ionicons name="trash" size={24} color="red" />
+                </TouchableOpacity>
             </View>
 
             {/* progress bar */}
             <View style={styles.amountContainer}>
                 <Text style={{ fontFamily: 'outfit-bold' }}>R$ {totalCost}</Text>
                 <Text style={{ fontFamily: 'outfit' }}>
-                    Orçmento Total: {categoryData.assigned_budget}
+                    Orçamento Total: {categoryData.assigned_budget}
                 </Text>
             </View>
 

@@ -8,6 +8,7 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     ToastAndroid,
+    ActivityIndicator,
 } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
@@ -30,6 +31,7 @@ export default function AddNewCategoryItem() {
     const [url, setUrl] = useState();
     const [cost, setCost] = useState();
     const [note, setNote] = useState();
+    const [loading, setLoading] = useState(false);
 
     const onImagePick = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,6 +48,8 @@ export default function AddNewCategoryItem() {
     };
 
     const onClickAdd = async () => {
+        setLoading(true);
+
         const fileName = Date.now();
 
         const { data, error } = await supabase.storage
@@ -75,6 +79,7 @@ export default function AddNewCategoryItem() {
             ToastAndroid.show('Novo Item Adicionado!', ToastAndroid.SHORT);
             // console.log(data);
 
+            setLoading(false);
             router.replace({
                 pathname: '/category-detail',
                 params: {
@@ -132,10 +137,14 @@ export default function AddNewCategoryItem() {
 
                 <TouchableOpacity
                     style={styles.button}
-                    disabled={!name || !cost}
+                    disabled={!name || !cost || loading}
                     onPress={() => onClickAdd()}
                 >
-                    <Text style={styles.textButton}>Adicionar</Text>
+                    {loading ? (
+                        <ActivityIndicator color={Colors.WHITE}/>
+                    ) : (
+                        <Text style={styles.textButton}>Adicionar</Text>
+                    )}
                 </TouchableOpacity>
             </ScrollView>
         </KeyboardAvoidingView>

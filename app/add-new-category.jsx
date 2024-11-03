@@ -1,4 +1,12 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    TouchableOpacity,
+    ToastAndroid,
+    ActivityIndicator,
+} from 'react-native';
 import React, { useState } from 'react';
 import Colors from '../utils/Colors';
 import ColorPicker from '../components/ColorPicker';
@@ -10,13 +18,14 @@ import { useRouter } from 'expo-router';
 
 export default function AddNewCategory() {
     const router = useRouter();
-
     const [selectedIcon, setSelectedIcon] = useState('IC');
     const [selectedColor, setSelectedColor] = useState(Colors.PURPLE);
     const [categoryName, setCategoryName] = useState();
     const [totalBudget, setTotalBudget] = useState();
+    const [loading, setLoading] = useState(false);
 
     const onCreateCategory = async () => {
+        setLoading(true);
         const user = await client.getUserDetails();
 
         const { data, error } = await supabase
@@ -39,7 +48,11 @@ export default function AddNewCategory() {
                     categoryId: data[0].id,
                 },
             });
+            setLoading(false);
             ToastAndroid.show('Categoria Criada', ToastAndroid.SHORT);
+        }
+        if (error) {
+            setLoading(false);
         }
     };
 
@@ -86,12 +99,16 @@ export default function AddNewCategory() {
 
             <TouchableOpacity
                 style={styles.button}
-                disabled={!categoryName || !totalBudget}
+                disabled={!categoryName || !totalBudget || loading}
                 onPress={() => onCreateCategory()}
             >
-                <Text style={{ textAlign: 'center', fontSize: 18, color: Colors.WHITE }}>
-                    Salvar
-                </Text>
+                {loading ? (
+                    <ActivityIndicator color={Colors.WHITE} />
+                ) : (
+                    <Text style={{ textAlign: 'center', fontSize: 18, color: Colors.WHITE }}>
+                        Salvar
+                    </Text>
+                )}
             </TouchableOpacity>
         </View>
     );
