@@ -1,14 +1,3 @@
-// import { Redirect } from 'expo-router';
-// import { Text, View } from 'react-native';
-
-// export default function Index() {
-//     return (
-//         <View>
-//             <Redirect href={'/login'}/>
-//         </View>
-//     );
-// }
-
 import { View, Text, Button, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Link, useRouter } from 'expo-router';
