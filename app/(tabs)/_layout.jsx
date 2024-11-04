@@ -15,14 +15,14 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Home',
+                    title: 'Início',
                     tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
                 }}
             />
             <Tabs.Screen
                 name="history"
                 options={{
-                    title: 'History',
+                    title: 'Histórico',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome size={28} name="history" color={color} />
                     ),
@@ -31,7 +31,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="profile"
                 options={{
-                    title: 'Profile',
+                    title: 'Perfil',
                     tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
                 }}
             />

@@ -40,15 +40,6 @@ export default function Home() {
         }
     };
 
-    // const handleLogout = async () => {
-    //     const loggedOut = await client.logout();
-
-    //     if (loggedOut) {
-    //         await services.storeData('login', 'false');
-    //         router.replace('/login');
-    //     }
-    // };
-
     const getCategoryList = async () => {
         setLoading(true);
 
@@ -85,6 +76,7 @@ export default function Home() {
                 >
                     <Header />
                 </View>
+
                 <View
                     style={{
                         padding: 20,
@@ -95,9 +87,8 @@ export default function Home() {
 
                     <CategoryList categoryList={categoryList} />
                 </View>
-
-                {/* <Button title="Sair" onPress={handleLogout} /> */}
             </ScrollView>
+
             <Link href={'/add-new-category'} style={styles.addBtnContainer}>
                 <Ionicons name="add-circle" size={64} color={Colors.PRIMARY} />
             </Link>
